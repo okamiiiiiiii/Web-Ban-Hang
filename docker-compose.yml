@@ -1,0 +1,30 @@
+version: '3'
+
+services:
+
+  laravel:
+    build:
+      context: ./
+      dockerfile: ./docker/laravel/Dockerfile
+    container_name: pj_laravel
+    volumes:
+      - ./src:/var/www/html
+    ports:
+      - "9002:9000"
+    networks:
+      - pj-networks
+
+  nginx-laravel:
+    build: ./docker/nginx-laravel
+    container_name: pj-nginx-laravel
+    environment:
+      TZ: Asia/Tokyo
+    ports:
+      - "8880:80"
+    volumes:
+      - ./src:/var/www/html
+    networks:
+      - pj-networks
+networks:
+  pj-networks:
+    driver: bridge
