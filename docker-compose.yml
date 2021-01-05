@@ -25,6 +25,27 @@ services:
       - ./src:/var/www/html
     networks:
       - pj-networks
+
+  mysql:
+    build: ./docker/mysql
+    container_name: pj-mysql
+    environment: 
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: laravel
+      MYSQL_USER: dungx
+      MYSQL_PASSWORD: dungpro123
+    ports:
+      - "3307:3306"
+    volumes:
+      - data:/var/lib/mysql
+    networks:
+      - pj-networks
+
+  phpmyadmin:
+    build: ./docker/phpmyadmin
+    container_name: pj-phpmyadmin
 networks:
   pj-networks:
     driver: bridge
+volumes:
+  data:
